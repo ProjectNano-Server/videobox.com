@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Video Player</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+video{
+    background:black;
+}
+
+/* NORMAL */
+.normal{
+    width:80%;
+    max-width:900px;
+}
+
+/* SHORTS */
+.shorts{
+    width:360px;
+    height:640px;
+    object-fit:cover;
+}
+.controls{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+}
+select{
+    padding:6px;
+}
+</style>
+</head>
+
+<body>
+
+<video id="player" controls autoplay></video>
+
+<div class="controls">
+<select id="speed">
+  <option value="0.5">0.5x</option>
+  <option value="1" selected>1x</option>
+  <option value="1.5">1.5x</option>
+  <option value="2">2x</option>
+</select>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const video = params.get("video");
+const type = params.get("type");
+
+const player = document.getElementById("player");
+player.src = "videos/" + video;
+
+// MOD AYARI
+if(type === "shorts"){
+  player.className = "shorts";
+  player.loop = true;
+} else {
+  player.className = "normal";
+}
+
+// HIZ DEĞİŞTİRME
+document.getElementById("speed").onchange = e=>{
+  player.playbackRate = e.target.value;
+};
+</script>
+
+</body>
+</html>
